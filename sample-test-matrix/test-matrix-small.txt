@@ -1,0 +1,5 @@
+Workload Stress 01	Tiny Objects (004KB,128KB,512KB)	5500	001,100	x	x	x		
+Workload Stress 02	Small Objects (001MB,032MB,064MB)	3000	001,100	x	x	x		
+Workload Stress 06	Backup Small Range (0100-2048)KB	5500	001,100				x	
+Workload Stress 09	Fileshare Small (004-128)KB	5500	001,100					x
+Workload Stress 11	Mix Usage Small (0100-2048)KB	2000	001,100				x	

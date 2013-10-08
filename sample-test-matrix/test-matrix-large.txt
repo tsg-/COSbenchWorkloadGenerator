@@ -1,0 +1,4 @@
+Workload Stress 04	Large Objects (001GB)	100	001,100	x	x	x		
+Workload Stress 05	Giant Objects (2GB,4GB)	10	001,100	x	x	x		
+Workload Stress 08	Backup Large Range (2-5)GB	100	001,100				x	
+Workload Stress 13	Mix Usage Large (2-5)GB	250	001,100				x	
