@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<workload description="Mix Usage Med (0100-500)MB" name="Workload Stress 12">
+          <storage type="swift"/>
+          <auth config="username=tester;password=testing;auth_url=http://192.168.90.30/auth/v1.0;retry=30" type="swauth"/>
+          <workflow>
+                    <workstage name="init-cr(1,1)-4">
+                              <work config="containers=r(1,1)" type="init" workers="4"/>
+                    </workstage>
+                    <workstage name="init-cr(101,200)-4">
+                              <work config="containers=r(101,200)" type="init" workers="4"/>
+                    </workstage>
+                    <workstage name="prepare-cr(1,1)-or(1,2000)-su(0100,500)MB-256">
+                              <work config="containers=r(1,1);objects=r(1,2000);sizes=u(0100,500)MB" totalOps="1000" type="prepare" workers="256"/>
+                    </workstage>
+                    <workstage name="prepare-cr(101,200)-or(2001,4000)-su(0100,500)MB-256">
+                              <work config="containers=r(101,200);objects=r(2001,4000);sizes=u(0100,500)MB" totalOps="100000" type="prepare" workers="256"/>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-MixUsageMed(0100,500)MB_c1_o1000_r98w1d1_NUMWORKERS">
+                              <work name="main-MixUsageMed(0100,500)MB_c1_o1000_r98w1d1_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(1,1);objects=u(1,1000)" ratio="98" type="read"/>
+                                        <operation config="containers=u(1,1);objects=u(1,1000);sizes=u(0100,500)MB" ratio="1" type="write"/>
+                                        <operation config="containers=u(1,1);objects=u(1001,2000)" ratio="1" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-MixUsageMed(0100,500)MB_c100_o1000_r98w1d1_NUMWORKERS">
+                              <work name="main-MixUsageMed(0100,500)MB_c100_o1000_r98w1d1_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(101,200);objects=u(2001,3000)" ratio="98" type="read"/>
+                                        <operation config="containers=u(101,200);objects=u(2001,3000);sizes=u(0100,500)MB" ratio="1" type="write"/>
+                                        <operation config="containers=u(101,200);objects=u(3001,4000)" ratio="1" type="delete"/>
+                              </work>
+                    </workstage>
+          </workflow>
+</workload>

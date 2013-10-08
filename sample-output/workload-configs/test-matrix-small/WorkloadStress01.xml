@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<workload description="Tiny Objects (004KB,128KB,512KB)" name="Workload Stress 01">
+          <storage type="swift"/>
+          <auth config="username=tester;password=testing;auth_url=http://192.168.90.30/auth/v1.0;retry=30" type="swauth"/>
+          <workflow>
+                    <workstage name="init-cr(1,1)-4">
+                              <work config="containers=r(1,1)" type="init" workers="4"/>
+                    </workstage>
+                    <workstage name="init-cr(101,200)-4">
+                              <work config="containers=r(101,200)" type="init" workers="4"/>
+                    </workstage>
+                    <workstage name="init-cr(201,201)-4">
+                              <work config="containers=r(201,201)" type="init" workers="4"/>
+                    </workstage>
+                    <workstage name="init-cr(301,400)-4">
+                              <work config="containers=r(301,400)" type="init" workers="4"/>
+                    </workstage>
+                    <workstage name="init-cr(401,401)-4">
+                              <work config="containers=r(401,401)" type="init" workers="4"/>
+                    </workstage>
+                    <workstage name="init-cr(501,600)-4">
+                              <work config="containers=r(501,600)" type="init" workers="4"/>
+                    </workstage>
+                    <workstage name="prepare-cr(1,1)-or(1,22000)-sc(004)KB-2048">
+                              <work config="containers=r(1,1);objects=r(1,22000);sizes=c(004)KB" totalOps="5500" type="prepare" workers="2048"/>
+                    </workstage>
+                    <workstage name="prepare-cr(101,200)-or(22001,44000)-sc(004)KB-2048">
+                              <work config="containers=r(101,200);objects=r(22001,44000);sizes=c(004)KB" totalOps="550000" type="prepare" workers="2048"/>
+                    </workstage>
+                    <workstage name="prepare-cr(201,201)-or(44001,66000)-sc(128)KB-2048">
+                              <work config="containers=r(201,201);objects=r(44001,66000);sizes=c(128)KB" totalOps="5500" type="prepare" workers="2048"/>
+                    </workstage>
+                    <workstage name="prepare-cr(301,400)-or(66001,88000)-sc(128)KB-2048">
+                              <work config="containers=r(301,400);objects=r(66001,88000);sizes=c(128)KB" totalOps="550000" type="prepare" workers="2048"/>
+                    </workstage>
+                    <workstage name="prepare-cr(401,401)-or(88001,110000)-sc(512)KB-2048">
+                              <work config="containers=r(401,401);objects=r(88001,110000);sizes=c(512)KB" totalOps="5500" type="prepare" workers="2048"/>
+                    </workstage>
+                    <workstage name="prepare-cr(501,600)-or(110001,132000)-sc(512)KB-2048">
+                              <work config="containers=r(501,600);objects=r(110001,132000);sizes=c(512)KB" totalOps="550000" type="prepare" workers="2048"/>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-TinyObjects(004)KB_c1_o5500_r5w90d5_NUMWORKERS">
+                              <work name="main-TinyObjects(004)KB_c1_o5500_r5w90d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(1,1);objects=u(1,5500)" ratio="5" type="read"/>
+                                        <operation config="containers=u(1,1);objects=u(1,5500);sizes=c(004)KB" ratio="90" type="write"/>
+                                        <operation config="containers=u(1,1);objects=u(5501,11000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-TinyObjects(004)KB_c1_o5500_r45w50d5_NUMWORKERS">
+                              <work name="main-TinyObjects(004)KB_c1_o5500_r45w50d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(1,1);objects=u(1,5500)" ratio="45" type="read"/>
+                                        <operation config="containers=u(1,1);objects=u(1,5500);sizes=c(004)KB" ratio="50" type="write"/>
+                                        <operation config="containers=u(1,1);objects=u(11001,16500)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-TinyObjects(004)KB_c1_o5500_r85w10d5_NUMWORKERS">
+                              <work name="main-TinyObjects(004)KB_c1_o5500_r85w10d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(1,1);objects=u(1,5500)" ratio="85" type="read"/>
+                                        <operation config="containers=u(1,1);objects=u(1,5500);sizes=c(004)KB" ratio="10" type="write"/>
+                                        <operation config="containers=u(1,1);objects=u(16501,22000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-TinyObjects(004)KB_c100_o5500_r5w90d5_NUMWORKERS">
+                              <work name="main-TinyObjects(004)KB_c100_o5500_r5w90d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(101,200);objects=u(22001,27500)" ratio="5" type="read"/>
+                                        <operation config="containers=u(101,200);objects=u(22001,27500);sizes=c(004)KB" ratio="90" type="write"/>
+                                        <operation config="containers=u(101,200);objects=u(27501,33000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-TinyObjects(004)KB_c100_o5500_r45w50d5_NUMWORKERS">
+                              <work name="main-TinyObjects(004)KB_c100_o5500_r45w50d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(101,200);objects=u(22001,27500)" ratio="45" type="read"/>
+                                        <operation config="containers=u(101,200);objects=u(22001,27500);sizes=c(004)KB" ratio="50" type="write"/>
+                                        <operation config="containers=u(101,200);objects=u(33001,38500)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-TinyObjects(004)KB_c100_o5500_r85w10d5_NUMWORKERS">
+                              <work name="main-TinyObjects(004)KB_c100_o5500_r85w10d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(101,200);objects=u(22001,27500)" ratio="85" type="read"/>
+                                        <operation config="containers=u(101,200);objects=u(22001,27500);sizes=c(004)KB" ratio="10" type="write"/>
+                                        <operation config="containers=u(101,200);objects=u(38501,44000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-TinyObjects(128)KB_c1_o5500_r5w90d5_NUMWORKERS">
+                              <work name="main-TinyObjects(128)KB_c1_o5500_r5w90d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(201,201);objects=u(44001,49500)" ratio="5" type="read"/>
+                                        <operation config="containers=u(201,201);objects=u(44001,49500);sizes=c(128)KB" ratio="90" type="write"/>
+                                        <operation config="containers=u(201,201);objects=u(49501,55000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-TinyObjects(128)KB_c1_o5500_r45w50d5_NUMWORKERS">
+                              <work name="main-TinyObjects(128)KB_c1_o5500_r45w50d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(201,201);objects=u(44001,49500)" ratio="45" type="read"/>
+                                        <operation config="containers=u(201,201);objects=u(44001,49500);sizes=c(128)KB" ratio="50" type="write"/>
+                                        <operation config="containers=u(201,201);objects=u(55001,60500)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-TinyObjects(128)KB_c1_o5500_r85w10d5_NUMWORKERS">
+                              <work name="main-TinyObjects(128)KB_c1_o5500_r85w10d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(201,201);objects=u(44001,49500)" ratio="85" type="read"/>
+                                        <operation config="containers=u(201,201);objects=u(44001,49500);sizes=c(128)KB" ratio="10" type="write"/>
+                                        <operation config="containers=u(201,201);objects=u(60501,66000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-TinyObjects(128)KB_c100_o5500_r5w90d5_NUMWORKERS">
+                              <work name="main-TinyObjects(128)KB_c100_o5500_r5w90d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(301,400);objects=u(66001,71500)" ratio="5" type="read"/>
+                                        <operation config="containers=u(301,400);objects=u(66001,71500);sizes=c(128)KB" ratio="90" type="write"/>
+                                        <operation config="containers=u(301,400);objects=u(71501,77000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-TinyObjects(128)KB_c100_o5500_r45w50d5_NUMWORKERS">
+                              <work name="main-TinyObjects(128)KB_c100_o5500_r45w50d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(301,400);objects=u(66001,71500)" ratio="45" type="read"/>
+                                        <operation config="containers=u(301,400);objects=u(66001,71500);sizes=c(128)KB" ratio="50" type="write"/>
+                                        <operation config="containers=u(301,400);objects=u(77001,82500)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-TinyObjects(128)KB_c100_o5500_r85w10d5_NUMWORKERS">
+                              <work name="main-TinyObjects(128)KB_c100_o5500_r85w10d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(301,400);objects=u(66001,71500)" ratio="85" type="read"/>
+                                        <operation config="containers=u(301,400);objects=u(66001,71500);sizes=c(128)KB" ratio="10" type="write"/>
+                                        <operation config="containers=u(301,400);objects=u(82501,88000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-TinyObjects(512)KB_c1_o5500_r5w90d5_NUMWORKERS">
+                              <work name="main-TinyObjects(512)KB_c1_o5500_r5w90d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(401,401);objects=u(88001,93500)" ratio="5" type="read"/>
+                                        <operation config="containers=u(401,401);objects=u(88001,93500);sizes=c(512)KB" ratio="90" type="write"/>
+                                        <operation config="containers=u(401,401);objects=u(93501,99000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-TinyObjects(512)KB_c1_o5500_r45w50d5_NUMWORKERS">
+                              <work name="main-TinyObjects(512)KB_c1_o5500_r45w50d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(401,401);objects=u(88001,93500)" ratio="45" type="read"/>
+                                        <operation config="containers=u(401,401);objects=u(88001,93500);sizes=c(512)KB" ratio="50" type="write"/>
+                                        <operation config="containers=u(401,401);objects=u(99001,104500)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-TinyObjects(512)KB_c1_o5500_r85w10d5_NUMWORKERS">
+                              <work name="main-TinyObjects(512)KB_c1_o5500_r85w10d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(401,401);objects=u(88001,93500)" ratio="85" type="read"/>
+                                        <operation config="containers=u(401,401);objects=u(88001,93500);sizes=c(512)KB" ratio="10" type="write"/>
+                                        <operation config="containers=u(401,401);objects=u(104501,110000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-TinyObjects(512)KB_c100_o5500_r5w90d5_NUMWORKERS">
+                              <work name="main-TinyObjects(512)KB_c100_o5500_r5w90d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(501,600);objects=u(110001,115500)" ratio="5" type="read"/>
+                                        <operation config="containers=u(501,600);objects=u(110001,115500);sizes=c(512)KB" ratio="90" type="write"/>
+                                        <operation config="containers=u(501,600);objects=u(115501,121000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-TinyObjects(512)KB_c100_o5500_r45w50d5_NUMWORKERS">
+                              <work name="main-TinyObjects(512)KB_c100_o5500_r45w50d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(501,600);objects=u(110001,115500)" ratio="45" type="read"/>
+                                        <operation config="containers=u(501,600);objects=u(110001,115500);sizes=c(512)KB" ratio="50" type="write"/>
+                                        <operation config="containers=u(501,600);objects=u(121001,126500)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-TinyObjects(512)KB_c100_o5500_r85w10d5_NUMWORKERS">
+                              <work name="main-TinyObjects(512)KB_c100_o5500_r85w10d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(501,600);objects=u(110001,115500)" ratio="85" type="read"/>
+                                        <operation config="containers=u(501,600);objects=u(110001,115500);sizes=c(512)KB" ratio="10" type="write"/>
+                                        <operation config="containers=u(501,600);objects=u(126501,132000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+          </workflow>
+</workload>

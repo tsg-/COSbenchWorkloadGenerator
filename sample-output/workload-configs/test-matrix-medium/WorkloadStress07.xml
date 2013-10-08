@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<workload description="Backup Med Range (100-500)MB" name="Workload Stress 07">
+          <storage type="swift"/>
+          <auth config="username=tester;password=testing;auth_url=http://192.168.90.30/auth/v1.0;retry=30" type="swauth"/>
+          <workflow>
+                    <workstage name="init-cr(1,1)-4">
+                              <work config="containers=r(1,1)" type="init" workers="4"/>
+                    </workstage>
+                    <workstage name="init-cr(101,200)-4">
+                              <work config="containers=r(101,200)" type="init" workers="4"/>
+                    </workstage>
+                    <workstage name="prepare-cr(1,1)-or(1,6000)-su(100,500)MB-1024">
+                              <work config="containers=r(1,1);objects=r(1,6000);sizes=u(100,500)MB" totalOps="3000" type="prepare" workers="1024"/>
+                    </workstage>
+                    <workstage name="prepare-cr(101,200)-or(6001,12000)-su(100,500)MB-1024">
+                              <work config="containers=r(101,200);objects=r(6001,12000);sizes=u(100,500)MB" totalOps="300000" type="prepare" workers="1024"/>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-BackupMedRange(100,500)MB_c1_o3000_r98w1d1_NUMWORKERS">
+                              <work name="main-BackupMedRange(100,500)MB_c1_o3000_r98w1d1_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(1,1);objects=u(1,3000)" ratio="98" type="read"/>
+                                        <operation config="containers=u(1,1);objects=u(1,3000);sizes=u(100,500)MB" ratio="1" type="write"/>
+                                        <operation config="containers=u(1,1);objects=u(3001,6000)" ratio="1" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-BackupMedRange(100,500)MB_c100_o3000_r98w1d1_NUMWORKERS">
+                              <work name="main-BackupMedRange(100,500)MB_c100_o3000_r98w1d1_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(101,200);objects=u(6001,9000)" ratio="98" type="read"/>
+                                        <operation config="containers=u(101,200);objects=u(6001,9000);sizes=u(100,500)MB" ratio="1" type="write"/>
+                                        <operation config="containers=u(101,200);objects=u(9001,12000)" ratio="1" type="delete"/>
+                              </work>
+                    </workstage>
+          </workflow>
+</workload>

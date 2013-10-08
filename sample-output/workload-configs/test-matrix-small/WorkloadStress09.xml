@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<workload description="Fileshare Small (004-128)KB" name="Workload Stress 09">
+          <storage type="swift"/>
+          <auth config="username=tester;password=testing;auth_url=http://192.168.90.30/auth/v1.0;retry=30" type="swauth"/>
+          <workflow>
+                    <workstage name="init-cr(1,1)-4">
+                              <work config="containers=r(1,1)" type="init" workers="4"/>
+                    </workstage>
+                    <workstage name="init-cr(101,200)-4">
+                              <work config="containers=r(101,200)" type="init" workers="4"/>
+                    </workstage>
+                    <workstage name="prepare-cr(1,1)-or(1,11000)-su(004,128)KB-2048">
+                              <work config="containers=r(1,1);objects=r(1,11000);sizes=u(004,128)KB" totalOps="5500" type="prepare" workers="2048"/>
+                    </workstage>
+                    <workstage name="prepare-cr(101,200)-or(11001,22000)-su(004,128)KB-2048">
+                              <work config="containers=r(101,200);objects=r(11001,22000);sizes=u(004,128)KB" totalOps="550000" type="prepare" workers="2048"/>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-FileshareSmall(004,128)KB_c1_o5500_r64w32d4_NUMWORKERS">
+                              <work name="main-FileshareSmall(004,128)KB_c1_o5500_r64w32d4_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(1,1);objects=u(1,5500)" ratio="64" type="read"/>
+                                        <operation config="containers=u(1,1);objects=u(1,5500);sizes=u(004,128)KB" ratio="32" type="write"/>
+                                        <operation config="containers=u(1,1);objects=u(5501,11000)" ratio="4" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-FileshareSmall(004,128)KB_c100_o5500_r64w32d4_NUMWORKERS">
+                              <work name="main-FileshareSmall(004,128)KB_c100_o5500_r64w32d4_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(101,200);objects=u(11001,16500)" ratio="64" type="read"/>
+                                        <operation config="containers=u(101,200);objects=u(11001,16500);sizes=u(004,128)KB" ratio="32" type="write"/>
+                                        <operation config="containers=u(101,200);objects=u(16501,22000)" ratio="4" type="delete"/>
+                              </work>
+                    </workstage>
+          </workflow>
+</workload>

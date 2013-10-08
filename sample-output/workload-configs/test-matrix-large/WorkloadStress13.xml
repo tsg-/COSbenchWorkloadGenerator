@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<workload description="Mix Usage Large (2-5)GB" name="Workload Stress 13">
+          <storage type="swift"/>
+          <auth config="username=tester;password=testing;auth_url=http://192.168.90.30/auth/v1.0;retry=30" type="swauth"/>
+          <workflow>
+                    <workstage name="init-cr(1,1)-4">
+                              <work config="containers=r(1,1)" type="init" workers="4"/>
+                    </workstage>
+                    <workstage name="init-cr(101,200)-4">
+                              <work config="containers=r(101,200)" type="init" workers="4"/>
+                    </workstage>
+                    <workstage name="prepare-cr(1,1)-or(1,500)-su(2,5)GB-64">
+                              <work config="containers=r(1,1);objects=r(1,500);sizes=u(2,5)GB" totalOps="250" type="prepare" workers="64"/>
+                    </workstage>
+                    <workstage name="prepare-cr(101,200)-or(501,1000)-su(2,5)GB-64">
+                              <work config="containers=r(101,200);objects=r(501,1000);sizes=u(2,5)GB" totalOps="25000" type="prepare" workers="64"/>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-MixUsageLarge(2,5)GB_c1_o250_r98w1d1_NUMWORKERS">
+                              <work name="main-MixUsageLarge(2,5)GB_c1_o250_r98w1d1_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(1,1);objects=u(1,250)" ratio="98" type="read"/>
+                                        <operation config="containers=u(1,1);objects=u(1,250);sizes=u(2,5)GB" ratio="1" type="write"/>
+                                        <operation config="containers=u(1,1);objects=u(251,500)" ratio="1" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-MixUsageLarge(2,5)GB_c100_o250_r98w1d1_NUMWORKERS">
+                              <work name="main-MixUsageLarge(2,5)GB_c100_o250_r98w1d1_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(101,200);objects=u(501,750)" ratio="98" type="read"/>
+                                        <operation config="containers=u(101,200);objects=u(501,750);sizes=u(2,5)GB" ratio="1" type="write"/>
+                                        <operation config="containers=u(101,200);objects=u(751,1000)" ratio="1" type="delete"/>
+                              </work>
+                    </workstage>
+          </workflow>
+</workload>

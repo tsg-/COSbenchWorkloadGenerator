@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<workload description="Medium Objects (128MB,256MB,512MB)" name="Workload Stress 03">
+          <storage type="swift"/>
+          <auth config="username=tester;password=testing;auth_url=http://192.168.90.30/auth/v1.0;retry=30" type="swauth"/>
+          <workflow>
+                    <workstage name="init-cr(1,1)-4">
+                              <work config="containers=r(1,1)" type="init" workers="4"/>
+                    </workstage>
+                    <workstage name="init-cr(101,200)-4">
+                              <work config="containers=r(101,200)" type="init" workers="4"/>
+                    </workstage>
+                    <workstage name="init-cr(201,201)-4">
+                              <work config="containers=r(201,201)" type="init" workers="4"/>
+                    </workstage>
+                    <workstage name="init-cr(301,400)-4">
+                              <work config="containers=r(301,400)" type="init" workers="4"/>
+                    </workstage>
+                    <workstage name="init-cr(401,401)-4">
+                              <work config="containers=r(401,401)" type="init" workers="4"/>
+                    </workstage>
+                    <workstage name="init-cr(501,600)-4">
+                              <work config="containers=r(501,600)" type="init" workers="4"/>
+                    </workstage>
+                    <workstage name="prepare-cr(1,1)-or(1,4000)-sc(128)MB-256">
+                              <work config="containers=r(1,1);objects=r(1,4000);sizes=c(128)MB" totalOps="1000" type="prepare" workers="256"/>
+                    </workstage>
+                    <workstage name="prepare-cr(101,200)-or(4001,8000)-sc(128)MB-256">
+                              <work config="containers=r(101,200);objects=r(4001,8000);sizes=c(128)MB" totalOps="100000" type="prepare" workers="256"/>
+                    </workstage>
+                    <workstage name="prepare-cr(201,201)-or(8001,12000)-sc(256)MB-256">
+                              <work config="containers=r(201,201);objects=r(8001,12000);sizes=c(256)MB" totalOps="1000" type="prepare" workers="256"/>
+                    </workstage>
+                    <workstage name="prepare-cr(301,400)-or(12001,16000)-sc(256)MB-256">
+                              <work config="containers=r(301,400);objects=r(12001,16000);sizes=c(256)MB" totalOps="100000" type="prepare" workers="256"/>
+                    </workstage>
+                    <workstage name="prepare-cr(401,401)-or(16001,20000)-sc(512)MB-256">
+                              <work config="containers=r(401,401);objects=r(16001,20000);sizes=c(512)MB" totalOps="1000" type="prepare" workers="256"/>
+                    </workstage>
+                    <workstage name="prepare-cr(501,600)-or(20001,24000)-sc(512)MB-256">
+                              <work config="containers=r(501,600);objects=r(20001,24000);sizes=c(512)MB" totalOps="100000" type="prepare" workers="256"/>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-MediumObjects(128)MB_c1_o1000_r5w90d5_NUMWORKERS">
+                              <work name="main-MediumObjects(128)MB_c1_o1000_r5w90d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(1,1);objects=u(1,1000)" ratio="5" type="read"/>
+                                        <operation config="containers=u(1,1);objects=u(1,1000);sizes=c(128)MB" ratio="90" type="write"/>
+                                        <operation config="containers=u(1,1);objects=u(1001,2000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-MediumObjects(128)MB_c1_o1000_r45w50d5_NUMWORKERS">
+                              <work name="main-MediumObjects(128)MB_c1_o1000_r45w50d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(1,1);objects=u(1,1000)" ratio="45" type="read"/>
+                                        <operation config="containers=u(1,1);objects=u(1,1000);sizes=c(128)MB" ratio="50" type="write"/>
+                                        <operation config="containers=u(1,1);objects=u(2001,3000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-MediumObjects(128)MB_c1_o1000_r85w10d5_NUMWORKERS">
+                              <work name="main-MediumObjects(128)MB_c1_o1000_r85w10d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(1,1);objects=u(1,1000)" ratio="85" type="read"/>
+                                        <operation config="containers=u(1,1);objects=u(1,1000);sizes=c(128)MB" ratio="10" type="write"/>
+                                        <operation config="containers=u(1,1);objects=u(3001,4000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-MediumObjects(128)MB_c100_o1000_r5w90d5_NUMWORKERS">
+                              <work name="main-MediumObjects(128)MB_c100_o1000_r5w90d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(101,200);objects=u(4001,5000)" ratio="5" type="read"/>
+                                        <operation config="containers=u(101,200);objects=u(4001,5000);sizes=c(128)MB" ratio="90" type="write"/>
+                                        <operation config="containers=u(101,200);objects=u(5001,6000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-MediumObjects(128)MB_c100_o1000_r45w50d5_NUMWORKERS">
+                              <work name="main-MediumObjects(128)MB_c100_o1000_r45w50d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(101,200);objects=u(4001,5000)" ratio="45" type="read"/>
+                                        <operation config="containers=u(101,200);objects=u(4001,5000);sizes=c(128)MB" ratio="50" type="write"/>
+                                        <operation config="containers=u(101,200);objects=u(6001,7000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-MediumObjects(128)MB_c100_o1000_r85w10d5_NUMWORKERS">
+                              <work name="main-MediumObjects(128)MB_c100_o1000_r85w10d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(101,200);objects=u(4001,5000)" ratio="85" type="read"/>
+                                        <operation config="containers=u(101,200);objects=u(4001,5000);sizes=c(128)MB" ratio="10" type="write"/>
+                                        <operation config="containers=u(101,200);objects=u(7001,8000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-MediumObjects(256)MB_c1_o1000_r5w90d5_NUMWORKERS">
+                              <work name="main-MediumObjects(256)MB_c1_o1000_r5w90d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(201,201);objects=u(8001,9000)" ratio="5" type="read"/>
+                                        <operation config="containers=u(201,201);objects=u(8001,9000);sizes=c(256)MB" ratio="90" type="write"/>
+                                        <operation config="containers=u(201,201);objects=u(9001,10000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-MediumObjects(256)MB_c1_o1000_r45w50d5_NUMWORKERS">
+                              <work name="main-MediumObjects(256)MB_c1_o1000_r45w50d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(201,201);objects=u(8001,9000)" ratio="45" type="read"/>
+                                        <operation config="containers=u(201,201);objects=u(8001,9000);sizes=c(256)MB" ratio="50" type="write"/>
+                                        <operation config="containers=u(201,201);objects=u(10001,11000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-MediumObjects(256)MB_c1_o1000_r85w10d5_NUMWORKERS">
+                              <work name="main-MediumObjects(256)MB_c1_o1000_r85w10d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(201,201);objects=u(8001,9000)" ratio="85" type="read"/>
+                                        <operation config="containers=u(201,201);objects=u(8001,9000);sizes=c(256)MB" ratio="10" type="write"/>
+                                        <operation config="containers=u(201,201);objects=u(11001,12000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-MediumObjects(256)MB_c100_o1000_r5w90d5_NUMWORKERS">
+                              <work name="main-MediumObjects(256)MB_c100_o1000_r5w90d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(301,400);objects=u(12001,13000)" ratio="5" type="read"/>
+                                        <operation config="containers=u(301,400);objects=u(12001,13000);sizes=c(256)MB" ratio="90" type="write"/>
+                                        <operation config="containers=u(301,400);objects=u(13001,14000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-MediumObjects(256)MB_c100_o1000_r45w50d5_NUMWORKERS">
+                              <work name="main-MediumObjects(256)MB_c100_o1000_r45w50d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(301,400);objects=u(12001,13000)" ratio="45" type="read"/>
+                                        <operation config="containers=u(301,400);objects=u(12001,13000);sizes=c(256)MB" ratio="50" type="write"/>
+                                        <operation config="containers=u(301,400);objects=u(14001,15000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-MediumObjects(256)MB_c100_o1000_r85w10d5_NUMWORKERS">
+                              <work name="main-MediumObjects(256)MB_c100_o1000_r85w10d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(301,400);objects=u(12001,13000)" ratio="85" type="read"/>
+                                        <operation config="containers=u(301,400);objects=u(12001,13000);sizes=c(256)MB" ratio="10" type="write"/>
+                                        <operation config="containers=u(301,400);objects=u(15001,16000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-MediumObjects(512)MB_c1_o1000_r5w90d5_NUMWORKERS">
+                              <work name="main-MediumObjects(512)MB_c1_o1000_r5w90d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(401,401);objects=u(16001,17000)" ratio="5" type="read"/>
+                                        <operation config="containers=u(401,401);objects=u(16001,17000);sizes=c(512)MB" ratio="90" type="write"/>
+                                        <operation config="containers=u(401,401);objects=u(17001,18000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-MediumObjects(512)MB_c1_o1000_r45w50d5_NUMWORKERS">
+                              <work name="main-MediumObjects(512)MB_c1_o1000_r45w50d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(401,401);objects=u(16001,17000)" ratio="45" type="read"/>
+                                        <operation config="containers=u(401,401);objects=u(16001,17000);sizes=c(512)MB" ratio="50" type="write"/>
+                                        <operation config="containers=u(401,401);objects=u(18001,19000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-MediumObjects(512)MB_c1_o1000_r85w10d5_NUMWORKERS">
+                              <work name="main-MediumObjects(512)MB_c1_o1000_r85w10d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(401,401);objects=u(16001,17000)" ratio="85" type="read"/>
+                                        <operation config="containers=u(401,401);objects=u(16001,17000);sizes=c(512)MB" ratio="10" type="write"/>
+                                        <operation config="containers=u(401,401);objects=u(19001,20000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-MediumObjects(512)MB_c100_o1000_r5w90d5_NUMWORKERS">
+                              <work name="main-MediumObjects(512)MB_c100_o1000_r5w90d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(501,600);objects=u(20001,21000)" ratio="5" type="read"/>
+                                        <operation config="containers=u(501,600);objects=u(20001,21000);sizes=c(512)MB" ratio="90" type="write"/>
+                                        <operation config="containers=u(501,600);objects=u(21001,22000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-MediumObjects(512)MB_c100_o1000_r45w50d5_NUMWORKERS">
+                              <work name="main-MediumObjects(512)MB_c100_o1000_r45w50d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(501,600);objects=u(20001,21000)" ratio="45" type="read"/>
+                                        <operation config="containers=u(501,600);objects=u(20001,21000);sizes=c(512)MB" ratio="50" type="write"/>
+                                        <operation config="containers=u(501,600);objects=u(22001,23000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-MediumObjects(512)MB_c100_o1000_r85w10d5_NUMWORKERS">
+                              <work name="main-MediumObjects(512)MB_c100_o1000_r85w10d5_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(501,600);objects=u(20001,21000)" ratio="85" type="read"/>
+                                        <operation config="containers=u(501,600);objects=u(20001,21000);sizes=c(512)MB" ratio="10" type="write"/>
+                                        <operation config="containers=u(501,600);objects=u(23001,24000)" ratio="5" type="delete"/>
+                              </work>
+                    </workstage>
+          </workflow>
+</workload>

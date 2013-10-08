@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<workload description="Mix Usage Small (0100-2048)KB" name="Workload Stress 11">
+          <storage type="swift"/>
+          <auth config="username=tester;password=testing;auth_url=http://192.168.90.30/auth/v1.0;retry=30" type="swauth"/>
+          <workflow>
+                    <workstage name="init-cr(1,1)-4">
+                              <work config="containers=r(1,1)" type="init" workers="4"/>
+                    </workstage>
+                    <workstage name="init-cr(101,200)-4">
+                              <work config="containers=r(101,200)" type="init" workers="4"/>
+                    </workstage>
+                    <workstage name="prepare-cr(1,1)-or(1,4000)-su(0100,2048)KB-512">
+                              <work config="containers=r(1,1);objects=r(1,4000);sizes=u(0100,2048)KB" totalOps="2000" type="prepare" workers="512"/>
+                    </workstage>
+                    <workstage name="prepare-cr(101,200)-or(4001,8000)-su(0100,2048)KB-512">
+                              <work config="containers=r(101,200);objects=r(4001,8000);sizes=u(0100,2048)KB" totalOps="200000" type="prepare" workers="512"/>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-MixUsageSmall(0100,2048)KB_c1_o2000_r98w1d1_NUMWORKERS">
+                              <work name="main-MixUsageSmall(0100,2048)KB_c1_o2000_r98w1d1_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(1,1);objects=u(1,2000)" ratio="98" type="read"/>
+                                        <operation config="containers=u(1,1);objects=u(1,2000);sizes=u(0100,2048)KB" ratio="1" type="write"/>
+                                        <operation config="containers=u(1,1);objects=u(2001,4000)" ratio="1" type="delete"/>
+                              </work>
+                    </workstage>
+                    <workstage closuredelay="60" name="main-MixUsageSmall(0100,2048)KB_c100_o2000_r98w1d1_NUMWORKERS">
+                              <work name="main-MixUsageSmall(0100,2048)KB_c100_o2000_r98w1d1_NUMWORKERS" rampup="360" runtime="900" workers="NUMWORKERS">
+                                        <operation config="containers=u(101,200);objects=u(4001,6000)" ratio="98" type="read"/>
+                                        <operation config="containers=u(101,200);objects=u(4001,6000);sizes=u(0100,2048)KB" ratio="1" type="write"/>
+                                        <operation config="containers=u(101,200);objects=u(6001,8000)" ratio="1" type="delete"/>
+                              </work>
+                    </workstage>
+          </workflow>
+</workload>
